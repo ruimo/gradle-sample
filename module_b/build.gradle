@@ -17,14 +17,13 @@ uploadArchives {
   }
 }
 
-// This does not work. Unit test fill fail with ClassNotFoundException.
-configurations {
-  runtime.exclude group: 'javax', name: 'javaee-api', version: '6.0'
-}
-
 dependencies {
   compile group: 'ruimo', name: 'module_a', version: '1.0-SNAPSHOT'
   testCompile group: 'junit', name: 'junit', version: '4.10'
+}
 
-  testCompile group: 'javax', name: 'javaee-api', version: '6.0'
+war {
+    classpath = classpath.filter {
+        it.name != 'javaee-api-6.0.jar'
+    }   
 }
