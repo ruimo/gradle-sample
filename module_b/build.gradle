@@ -25,4 +25,6 @@ configurations {
 dependencies {
   compile group: 'ruimo', name: 'module_a', version: '1.0-SNAPSHOT'
   testCompile group: 'junit', name: 'junit', version: '4.10'
+
+  testCompile group: 'javax', name: 'javaee-api', version: '6.0'
 }
