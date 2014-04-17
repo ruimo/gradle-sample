@@ -1,0 +1,28 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'maven'
+
+repositories {
+  mavenCentral()
+  maven {
+    url "file:///tmp/repo"
+  }
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      repository(url: "file:///tmp/repo")
+    }
+  }
+}
+
+// This does not work. Unit test fill fail with ClassNotFoundException.
+configurations {
+  runtime.exclude group: 'javax', name: 'javaee-api', version: '6.0'
+}
+
+dependencies {
+  compile group: 'ruimo', name: 'module_a', version: '1.0-SNAPSHOT'
+  testCompile group: 'junit', name: 'junit', version: '4.10'
+}
