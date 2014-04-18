@@ -2,14 +2,6 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'maven'
 
-def shouldExcludesFromWar = [
-    [group: 'javax', module: 'javaee-api', version: '7.0']
-]
-
-def excludesFromWar = {
-    shouldExcludesFromWar.each { exclude module: it.module }
-}
-
 repositories {
   mavenCentral()
   maven {
@@ -26,11 +18,9 @@ uploadArchives {
 }
 
 dependencies {
-  compile group: 'ruimo', name: 'module_a', version: '1.0-SNAPSHOT', excludesFromWar
+  compile group: 'ruimo', name: 'module_a', version: '1.0-SNAPSHOT', { transitive = false }
   testCompile group: 'junit', name: 'junit', version: '4.10'
 
-  shouldExcludesFromWar.each {
-    compile "${it.group}:${it.module}:${it.version}"
-  }
+  testRuntime group: 'javax', name: 'javaee-api', version: '7.0'
 }
 
