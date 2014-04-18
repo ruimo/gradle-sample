@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'war'
 apply plugin: 'maven'
 
 repositories {
@@ -18,9 +17,5 @@ uploadArchives {
 }
 
 dependencies {
-  compile group: 'ruimo', name: 'module_c', version: '1.0-SNAPSHOT', { transitive = false }
-  testCompile group: 'junit', name: 'junit', version: '4.10'
-
-  providedCompile group: 'javax', name: 'javaee-api', version: '7.0'
+  compile group: 'ruimo', name: 'module_a', version: '1.0-SNAPSHOT'
 }
-
