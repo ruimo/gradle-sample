@@ -2,13 +2,12 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'maven'
 
-def excludesFromWar = [
+def shouldExcludesFromWar = [
     [group: 'javax', module: 'javaee-api', version: '6.0']
 ]
 
-configurations {
-    // まずはwarで不要なものをruntimeから除外してしまう。
-    excludesFromWar.each { runtime.exclude it }
+def excludesFromWar = {
+    shouldExcludesFromWar.each { exclude module: it.module }
 }
 
 repositories {
@@ -27,10 +26,11 @@ uploadArchives {
 }
 
 dependencies {
-  compile group: 'ruimo', name: 'module_a', version: '1.0-SNAPSHOT'
+  compile group: 'ruimo', name: 'module_a', version: '1.0-SNAPSHOT', excludesFromWar
   testCompile group: 'junit', name: 'junit', version: '4.10'
 
-  // warには不要であるがtestCompileで必要なJarをあらためて追加する。
-  excludesFromWar.each { testCompile "${it.group}:${it.module}:${it.version}" }
+  shouldExcludesFromWar.each {
+    testRuntime "${it.group}:${it.module}:${it.version}"
+  }
 }
 
